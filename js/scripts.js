@@ -38,14 +38,15 @@ header.insertBefore(overlay, headerContainer);
 
 //reusable fetch function
 const greeting = document.getElementsByClassName('greeting')[0];
+
 function fetchData(url) {
   return fetch(url)
     .then(checkStatus)
     .then(response => response.json())
     .catch(error => {
       console.log('error', error)
-        greeting.textContent = 'Oops! There is an network error. Please try it again later.';
-      })
+      greeting.textContent = 'Oops! There is an network error. Please try it again later.';
+    })
 };
 
 
@@ -59,7 +60,6 @@ function checkStatus(response) {
 
 //return data in all languages
 function fetchDataWithoutFilter() {
-  const letters = 'abcdefghijklmnopqrstuvwxyz';
   fetchData('https://randomuser.me/api/?results=12')
     .then(data => {
       data.results.map(result => {
@@ -70,30 +70,20 @@ function fetchDataWithoutFilter() {
 };
 
 /*return data in the English alphabet only by filtering employees' nationality*/
-function fetchDataWithFilter() {
-  fetchData('https://randomuser.me/api/?nat=us,au,nz,gb,ie,nz')
-    .then(data => {
-      directory(data.results[0]);
+fetchData('https://randomuser.me/api/?results=12&nat=us,au,nz,gb,ie,nz')
+  .then(data => {
+    data.results.map(result => {
+      directory(result);
       if (gallery.children.length === 12) {
         overlay.style.visibility = 'hidden';
       }
-      modal(data.results[0]);
+      modal(result);
     })
-};
-
-/*call fetchDataWithFilter function 12 times to receive data for 12 employees*/
-function appendEmployee() {
-  let i = 0;
-  while (i < 12) {
-    fetchDataWithFilter();
-    i++;
-  }
-};
-
-appendEmployee();
+  });
 
 //create and append cards to gallery element
 const gallery = document.getElementById('gallery');
+
 function directory(result) {
   const card = document.createElement('div');
   card.setAttribute('class', 'card');
@@ -174,6 +164,7 @@ modalContainer.addEventListener('click', function(e) {
 
 //search by employees' names
 const names = document.getElementsByClassName('card-name');
+
 function filterByName(input) {
   for (let i = 0; i < names.length; i++) {
     let name = names[i].textContent.toLowerCase();
@@ -232,8 +223,8 @@ modalContainer.addEventListener('click', function(e) {
       const original = copyBtn[i].innerHTML;
       copyBtn[i].innerHTML = '<span>Copied!</span>';
       setTimeout(() => {
-       copyBtn[i].innerHTML = original;
-     }, 1000);
+        copyBtn[i].innerHTML = original;
+      }, 1000);
     }
   }
 });
@@ -254,6 +245,7 @@ style.innerHTML = `
   left: 0;
   right: 0;
   border-radius: 5px;
+  transition: 1.2s ease-out;
 }
 
 body{
