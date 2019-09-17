@@ -206,7 +206,7 @@ const next = document.getElementsByClassName('modal-next');
 /*Hide prev button of first visible modal and next button of last visible modal
 when user is in search model*/
 function hidePrevNextModalBtn(input) {
-  for (let i = 1; i < gallery.children.length - 1; i++) {
+  for (let i = 0; i < gallery.children.length; i++) {
     next[i].style.display = 'block';
     prev[i].style.display = 'block';
   }
