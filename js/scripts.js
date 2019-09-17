@@ -206,7 +206,7 @@ const next = document.getElementsByClassName('modal-next');
 /*Hide prev button of first visible modal and next button of last visible modal
 when user is in search model*/
 function hidePrevNextModalBtn(input) {
-  for (let i = 0; i < gallery.children.length; i++) {
+  for (let i = 1; i < gallery.children.length - 1; i++) {
     next[i].style.display = 'block';
     prev[i].style.display = 'block';
   }
@@ -224,7 +224,7 @@ function hidePrevNextModalBtn(input) {
   }
 };
 
-/*click buttons to review previous and next employee. Callback function works for both
+/*click buttons to review previous and next employee. This function works for both
 view model and search model.*/
 modalContainer.addEventListener('click', function(e) {
   for (let i = 0; i < modalContainer.children.length; i++) {
