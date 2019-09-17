@@ -87,6 +87,7 @@ const gallery = document.getElementById('gallery');
 function directory(result) {
   const card = document.createElement('div');
   card.setAttribute('class', 'card');
+  card.style.display = 'inline-flex';
   gallery.appendChild(card);
   let html = `
   <div class="card-img-container">
@@ -179,29 +180,74 @@ function filterByName(input) {
   }
 };
 
-//when user starts entering, if there is any match, search results will show
+/*when user starts entering, if there is any match, show search results.
+Hide prev button of first visible modal and next button of last visible modal
+when user is in search model*/
 inputSearch.addEventListener('keyup', function(e) {
   filterByName(e.target.value);
+  hidePrevNextModalBtn(e.target.value);
 });
 
-//when user clicks on the submit button, if there is any match, search results will show
+/*when user clicks on the submit button, if there is any match, show search results.
+Hide prev button of first visible modal and next button of last visible modal
+when user is in search model*/
 const searchBtn = document.getElementById('serach-submit');
 searchBtn.addEventListener('click', function(e) {
+  e.preventDefault();
   const input = document.getElementById('search-input');
   filterByName(input.value);
+  hidePrevNextModalBtn(input.value);
 });
 
-//click buttons to review previous and next employee
+
+const prev = document.getElementsByClassName('modal-prev');
+const next = document.getElementsByClassName('modal-next');
+
+/*Hide prev button of first visible modal and next button of last visible modal
+when user is in search model*/
+function hidePrevNextModalBtn(input) {
+  for (let i = 1; i < gallery.children.length - 1; i++) {
+    next[i].style.display = 'block';
+    prev[i].style.display = 'block';
+  }
+  for (let i = 0; i < gallery.children.length; i++) {
+    if (gallery.children[i].style.display !== 'none') {
+      prev[i].style.display = 'none';
+      break;
+    }
+  }
+  for (let i = gallery.children.length - 1; i >= 0; i--) {
+    if (gallery.children[i].style.display !== 'none') {
+      next[i].style.display = 'none';
+      break;
+    }
+  }
+};
+
+/*click buttons to review previous and next employee. This function works for both
+view model and search model.*/
 modalContainer.addEventListener('click', function(e) {
-  const prev = document.getElementsByClassName('modal-prev');
-  const next = document.getElementsByClassName('modal-next');
   for (let i = 0; i < modalContainer.children.length; i++) {
     if (e.target === prev[i]) {
       modalElement[i].style.display = 'none';
-      modalElement[i - 1].style.display = 'block';
+      for (let j = 1; j < i + 1; j++) {
+        if (gallery.children[i - j].style.display !== 'none') {
+          modalElement[i - j].style.display = 'block';
+          break;
+        } else {
+          continue;
+        }
+      }
     } else if (e.target === next[i]) {
       modalElement[i].style.display = 'none';
-      modalElement[i + 1].style.display = 'block';
+      for (let j = 1; j < gallery.children.length - i; j++) {
+        if (gallery.children[i + j].style.display !== 'none') {
+          modalElement[i + j].style.display = 'block';
+          break;
+        } else {
+          continue;
+        }
+      }
     }
   }
 });
