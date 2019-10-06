@@ -8,9 +8,9 @@ inputSearch.setAttribute('type', 'search');
 inputSearch.setAttribute('id', 'search-input');
 inputSearch.setAttribute('class', 'search-input');
 inputSearch.setAttribute('placeholder', 'Search...');
-const inputSubmit = document.createElement('input');
+const inputSubmit = document.createElement('button');
 inputSubmit.setAttribute('type', 'submit');
-// inputSubmit.setAttribute('value', '&#x1F50D');
+inputSubmit.innerHTML = '<i class="fas fa-search">' + '' + '</i>'
 inputSubmit.setAttribute('id', 'serach-submit');
 inputSubmit.setAttribute('class', 'search-submit');
 //add search bar to the DOM
@@ -91,7 +91,7 @@ function directory(result) {
   gallery.appendChild(card);
   let html = `
   <div class="card-img-container">
-      <img class="card-img" src=${result.picture.thumbnail} alt="profile picture">
+      <img class="card-img" src=${result.picture.large} alt="profile picture">
   </div>
   <div class="card-info-container">
       <h3 id="name" class="card-name cap">${result.name.first} ${result.name.last}</h3>
@@ -118,7 +118,7 @@ function modal(result) {
       <button type="button" class="modal-copy-btn"><i class="far fa-copy"></i></button>
       <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
       <div class="modal-info-container">
-          <img class="modal-img" src=${result.picture.thumbnail} alt="profile picture">
+          <img class="modal-img" src=${result.picture.large} alt="profile picture">
           <h3 id="name" class="modal-name cap">${result.name.first} ${result.name.last}</h3>
           <p class="modal-text">${result.email}</p>
           <p class="modal-text cap">${result.location.city}</p>
